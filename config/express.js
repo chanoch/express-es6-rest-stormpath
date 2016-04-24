@@ -12,12 +12,15 @@ import winstonInstance from './winston';
 import routes from '../server/routes';
 import config from './env';
 import APIError from '../server/helpers/APIError';
+import stormpath from 'express-stormpath';
 
 const app = express();
 
 if (config.env === 'development') {
 	app.use(logger('dev'));
 }
+
+app.use(stormpath.init(app, {}));
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json());

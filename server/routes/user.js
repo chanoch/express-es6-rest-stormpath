@@ -2,12 +2,13 @@ import express from 'express';
 import validate from 'express-validation';
 import paramValidation from '../../config/param-validation';
 import userCtrl from '../controllers/user';
+import stormpath from 'express-stormpath';
 
 const router = express.Router();	// eslint-disable-line new-cap
 
 router.route('/')
 	/** GET /api/users - Get list of users */
-	.get(userCtrl.list)
+	.get(stormpath.loginRequired, userCtrl.list)
 
 	/** POST /api/users - Create new user */
 	.post(validate(paramValidation.createUser), userCtrl.create);
